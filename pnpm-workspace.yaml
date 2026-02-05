@@ -15,14 +15,14 @@ catalogs:
     nitro: 3.0.1-alpha.2
     typescript: ^5.9.3
     wait-on: ^9.0.3
-    wrangler: ^4.62.0
+    wrangler: ^4.63.0
   lib:
     '@upstash/redis': ^1.36.2
     aws4fetch: ^1.0.20
     ioredis: ^5.9.2
     skland-kit: ^0.3.4
-    statocysts: ^0.10.1
+    statocysts: ^0.10.2
     unctx: ^2.5.0
     unstorage: ^2.0.0-alpha.5
   types:
-    '@types/node': ^25.2.0
+    '@types/node': ^25.2.1
