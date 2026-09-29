@@ -16,6 +16,18 @@ export function formatCharacterName(character: AppBindingPlayer, appName?: strin
   return `${gamePrefix}${character.channelName}角色 ${formatPrivacyName(character)}`
 }
 
+export function formatError(error: unknown): string {
+  if (!(error instanceof Error))
+    return String(error)
+
+  const code = 'code' in error && typeof error.code === 'string' ? ` (${error.code})` : ''
+  const cause = 'cause' in error && error.cause != null ? `; cause: ${formatError(error.cause)}` : ''
+  const nested = error instanceof AggregateError && error.errors.length > 0
+    ? `; errors: ${error.errors.map(formatError).join('; ')}`
+    : ''
+  return `${error.message}${code}${cause}${nested}`
+}
+
 export function formatPrivacyName(character: AppBindingPlayer) {
   // eslint-disable-next-line node/prefer-global/process
   const isMinimalPrivacy = !!process.env.SKLAND_ANONYMOUS

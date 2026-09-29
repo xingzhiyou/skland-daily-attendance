@@ -1,6 +1,6 @@
 import type { AppBindingPlayer, Client } from 'skland-kit'
 import type { AttendanceHandlerResult } from './types'
-import { formatCharacterName } from '../format'
+import { formatCharacterName, formatError } from '../format'
 import { retry } from '../retry'
 import { attendanceHandlerRegistry } from './registry'
 
@@ -61,13 +61,13 @@ export async function attendCharacter(
   onRetry?: (retriesLeft: number) => void,
 ): Promise<AttendanceHandlerResult> {
   try {
-    return retry(() => attendance(client, character, appName), {
+    return await retry(() => attendance(client, character, appName), {
       retries: maxRetries,
       onRetry: onRetry ? retriesLeft => onRetry(retriesLeft) : undefined,
     })
   }
   catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = formatError(error)
     const characterLabel = formatCharacterName(character, appName)
     return {
       success: false,
